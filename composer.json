@@ -1,0 +1,18 @@
+{
+    "name": "cmhunt/concept2",
+    "description": "The Laravel Framework.",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "cmhunt\\": "src/"
+        }
+    }
+}

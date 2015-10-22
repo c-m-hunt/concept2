@@ -1,8 +1,6 @@
 {
     "name": "cmhunt/concept2",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "description": "Processor for concept2 log files",
     "type": "project",
     "require": {
 

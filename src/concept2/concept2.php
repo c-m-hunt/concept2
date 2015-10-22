@@ -24,10 +24,10 @@ class concept2 {
             if (isset($row[5]) && isset($row[6]) && strlen($row[5] > 0 && strlen($row[6]) > 0)) {
                 $workoutDate = \DateTime::createFromFormat('d/m/Y H:i', $row[2] . " " . $row[3]);
                 if ($workoutDate) {
-                    if ($workout instanceof \concept2\workout) {
+                    if ($workout instanceof workout) {
                         $this->workouts[] = $workout;
                     }
-                    $workout = new \concept2\workout($workoutDate, $row[4]);
+                    $workout = new workout($workoutDate, $row[4]);
                     $workout->time = $row[5];
                     $workout->metres = $row[6];
                     $workout->averageSPM = $row[7];
@@ -39,7 +39,7 @@ class concept2 {
             }
 
             if (isset($row[9]) && isset($row[10]) && strlen($row[9] > 0 && strlen($row[10]) > 0)) {
-                $split = new \concept2\split($row[9], $row[10], $row[11], $row[12]);
+                $split = new split($row[9], $row[10], $row[11], $row[12]);
                 $workout->addSplit(($split));
             }
         }

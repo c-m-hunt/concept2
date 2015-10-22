@@ -1,6 +1,6 @@
 <?php
 
-namespace concept2;
+namespace cmhunt\concept2;
 
 class workout
 {

@@ -1,9 +1,10 @@
 {
     "name": "cmhunt/concept2",
     "description": "Processor for concept2 log files",
-    "type": "project",
+    "type": "library",
+    "homepage": "https://github.com/cmhunt/concept2",
     "require": {
-
+        "php": ">=5.3.0"
     },
     "require-dev": {
 

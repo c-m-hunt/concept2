@@ -7,6 +7,21 @@ class concept2 {
     private $file;
     private $workouts = [];
 
+    public function getWorkous($type = null)
+    {
+        if ($type == null) {
+            return $this->workouts;
+        } else {
+            $workouts = [];
+            foreach ($this->workouts as $workout) {
+                if ($workout->type == $type) {
+                    $workouts[] = $workout;
+                }
+            }
+            return $workouts;
+        }
+    }
+
     public function loadFile($file)
     {
         $this->file = $file;

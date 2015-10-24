@@ -7,7 +7,7 @@ class concept2 {
     private $file;
     private $workouts = [];
 
-    public function getWorkous($type = null)
+    public function getWorkouts($type = null)
     {
         if ($type == null) {
             return $this->workouts;

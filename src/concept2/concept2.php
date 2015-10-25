@@ -53,9 +53,11 @@ class concept2 {
                 }
             }
 
-            if (isset($row[9]) && isset($row[10]) && strlen($row[9] > 0 && strlen($row[10]) > 0)) {
-                $split = new split($row[9], $row[10], $row[11], $row[12]);
-                $workout->addSplit(($split));
+            if (isset($row[9]) && isset($row[10]) && strlen($row[9]) > 0 && strlen($row[10]) > 0) {
+                if ($workout instanceof workout) {
+                    $split = new split($row[9], $row[10], $row[11], $row[12], $row[13]);
+                    $workout->addSplit(($split));
+                }                
             }
         }
         $this->workouts[] = $workout;

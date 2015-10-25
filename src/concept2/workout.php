@@ -17,7 +17,7 @@ class workout
     public $time;
     public $metres;
     public $averageSPM;
-    public $averageHearRate;
+    public $averageHeartRate;
 
     public $averagePace;
     public $calPerHour;

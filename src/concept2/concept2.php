@@ -79,10 +79,15 @@ class concept2 {
         return $seconds;
     }
 
-    public function formatSecondsToTime($seconds)
+    public function formatSecondsToTime($seconds, $inclHours = true)
     {
         $t = round($seconds);
-        return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);   
+        if ($inclHours) {
+            return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);  
+        } else {
+            return sprintf('%02d:%02d', ($t/60%60), $t%60);  
+        }
+         
     }
 
     public function timeByMonth()

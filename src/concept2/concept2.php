@@ -7,7 +7,7 @@ class concept2 {
     private $file;
     private $workouts = [];
 
-    public function getWorkous($type = null)
+    public function getWorkouts($type = null)
     {
         if ($type == null) {
             return $this->workouts;
@@ -68,6 +68,33 @@ class concept2 {
             $metres += $workout->metres;
         }
         return $metres;
+    }
+
+    public function totalTime()
+    {
+        $minutes = 0;
+        $seconds = 0;
+        $hours = 0;
+        foreach ($this->workouts as $workout) {
+            $time = explode(':',$workout->time);
+            if (count($time) == 2) {
+                $minutes = $minutes + $time[0];
+                $seconds = $seconds + $time[1];    
+            } else {
+                $hours = $hours + $time[0];
+                $minutes = $minutes + $time[1];
+                $seconds = $seconds + $time[2];     
+            }
+            
+        }
+
+        $minutes = $minutes + (floor( $seconds/60 ));
+        $seconds = $seconds - (floor( $seconds/60 ) * 60);
+        $hours = $hours + floor($minutes / 60);
+        $minutes = $minutes - (60 * floor($minutes / 60));
+
+        return $hours . ":" . $minutes . "." . floor($seconds);
+        
     }
 
     public function metresByMonth()

@@ -72,29 +72,22 @@ class concept2 {
 
     public function totalTime()
     {
-        $minutes = 0;
         $seconds = 0;
-        $hours = 0;
         foreach ($this->workouts as $workout) {
-            $time = explode(':',$workout->time);
-            if (count($time) == 2) {
-                $minutes = $minutes + $time[0];
-                $seconds = $seconds + $time[1];    
-            } else {
-                $hours = $hours + $time[0];
-                $minutes = $minutes + $time[1];
-                $seconds = $seconds + $time[2];     
-            }
-            
+            $seconds = $seconds + $this->secondsFromTime($workout->time);
         }
+        return $seconds;
+    }
 
-        $minutes = $minutes + (floor( $seconds/60 ));
-        $seconds = $seconds - (floor( $seconds/60 ) * 60);
-        $hours = $hours + floor($minutes / 60);
-        $minutes = $minutes - (60 * floor($minutes / 60));
+    public function formatSecondsToTime($seconds)
+    {
+        $t = round($seconds);
+        return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);   
+    }
 
-        return $hours . ":" . $minutes . "." . floor($seconds);
-        
+    public function timeByMonth()
+    {
+        return $this->timeByDateSplit('M Y');
     }
 
     public function metresByMonth()
@@ -112,6 +105,18 @@ class concept2 {
         return $this->metresByDateSplit('d');
     }
 
+    private function secondsFromTime($time)
+    {
+        $seconds = 0;
+        $time = explode(':', $time);
+        if (count($time) == 2) {
+            $seconds = $seconds + ($time[0] * 60)  + $time[1];
+        } else {
+            $seconds = $seconds + ($time[2] * 60 * 60)+ ($time[1] * 60) + $time[2];   
+        } 
+        return $seconds;    
+    }
+
     private function metresByDateSplit($split)
     {
         $metres = [];
@@ -123,5 +128,19 @@ class concept2 {
             $metres[$dateSplit] += $workout->metres;
         }
         return $metres;
+    }
+
+    private function timeByDateSplit($split)
+    {
+        $times = [];
+        foreach ($this->workouts as $workout) {
+            $dateSplit = $workout->date->format($split);
+            if (!isset($times[$dateSplit])) {
+                $times[$dateSplit] = 0;
+            }
+            $times[$dateSplit] += $this->secondsFromTime($workout->time);
+        }
+
+        return $times;
     }
 }

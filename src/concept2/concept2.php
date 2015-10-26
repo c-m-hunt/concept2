@@ -46,7 +46,7 @@ class concept2 {
                     $workout->time = $row[5];
                     $workout->metres = $row[6];
                     $workout->averageSPM = $row[7];
-                    $workout->averageHearRate = $row[8];
+                    $workout->averageHeartRate = $row[8];
                     $workout->averagePace = $row[13];
                     $workout->calPerHour = $row[14];
                     $workout->averageWatt = $row[15];

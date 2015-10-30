@@ -7,39 +7,48 @@ class concept2 {
     private $file;
     private $workouts = [];
 
-    public function getWorkouts($type = null)
+    public function getWorkouts()
     {
-        if ($type == null) {
-            return $this->workouts;
-        } else {
-            $workouts = [];
-            foreach ($this->workouts as $workout) {
-                if ($workout->type == $type) {
-                    $workouts[] = $workout;
-                }
-            }
-            return $workouts;
-        }
+        return $this->workouts;
     }
 
-    public function loadFile($file)
+    public function getWorkoutsByType($type)
     {
-        $this->file = $file;
-        $file = fopen($file,"r");
-        $data = [];
-        while(! feof($file))
-        {
-            $data[] = (fgetcsv($file));
+        $workouts = [];
+        foreach ($this->workouts as $workout) {
+            if ($workout->type == $type) {
+                $workouts[] = $workout;
+            }
         }
-        fclose($file);
+        return $workouts;
+    }
 
+    public function getWorkoutsByMonth($month, $year)
+    {
+
+        $workouts = [];
+        foreach ($this->workouts as $workout) {
+            if ($workout->date->format('Y') == $year && $workout->date->format('m') == $month) {
+                $workouts[] = $workout;
+            }
+        }
+        return $workouts;
+    }
+
+    public function loadData($data)
+    {
         $workout = null;
 
+        // Split data into array
+        $data = explode("\n", $data);
+
         foreach ($data as $row) {
+            $row = explode(',', $row);
             if (isset($row[5]) && isset($row[6]) && strlen($row[5] > 0 && strlen($row[6]) > 0)) {
                 $workoutDate = \DateTime::createFromFormat('d/m/Y H:i', $row[2] . " " . $row[3]);
                 if ($workoutDate) {
                     if ($workout instanceof workout) {
+
                         $this->workouts[] = $workout;
                     }
                     $workout = new workout($workoutDate, $row[4]);
@@ -99,7 +108,18 @@ class concept2 {
 
     public function metresByMonth()
     {
-        return $this->metresByDateSplit('M Y');
+        $metresByMonth = $this->metresByDateSplit('M Y');
+
+        /*
+        foreach ($metresByMonth as $key=>&$month) {
+
+            print_r($month);exit;
+
+            $date = \DateTime::createFromFormat('M Y', $key);
+            $month['month'] = $date->format('m');
+            $month['year'] = $date->format('y');
+        */
+        return $metresByMonth;
     }
 
     public function metresByHourOfDay()

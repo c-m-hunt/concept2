@@ -15,9 +15,9 @@ class concept2 {
     public function getWorkoutsByType($type)
     {
         $workouts = [];
-        foreach ($this->workouts as $workout) {
+        foreach ($this->workouts as $key=>$workout) {
             if ($workout->type == $type) {
-                $workouts[] = $workout;
+                $workouts[$key] = $workout;
             }
         }
         return $workouts;
@@ -27,9 +27,9 @@ class concept2 {
     {
 
         $workouts = [];
-        foreach ($this->workouts as $workout) {
+        foreach ($this->workouts as $key=>$workout) {
             if ($workout->date->format('Y') == $year && $workout->date->format('m') == $month) {
-                $workouts[] = $workout;
+                $workouts[$key] = $workout;
             }
         }
         return $workouts;

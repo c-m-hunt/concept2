@@ -49,7 +49,7 @@ class concept2 {
                 if ($workoutDate) {
                     if ($workout instanceof workout) {
 
-                        $this->workouts[] = $workout;
+                        $this->workouts[$this->getWorkoutHash($workout)] = $workout;
                     }
                     $workout = new workout($workoutDate, $row[4]);
                     $workout->time = $row[5];
@@ -62,14 +62,20 @@ class concept2 {
                 }
             }
 
-            if (isset($row[9]) && isset($row[10]) && strlen($row[9]) > 0 && strlen($row[10]) > 0) {
+            if (isset($row[9]) && isset($row[10]) && strlen($row[9]) > 0 && strlen($row[10]) > 0 && is_numeric($row[10])) {
                 if ($workout instanceof workout) {
                     $split = new split($row[9], $row[10], $row[11], $row[12], $row[13]);
                     $workout->addSplit(($split));
                 }                
             }
         }
-        $this->workouts[] = $workout;
+        $this->workouts[$this->getWorkoutHash($workout)] = $workout;
+    }
+
+    private function getWorkoutHash($workout)
+    {
+        $hash = md5($workout->date->format("Y-m-d H:i:s") . $workout->workoutName);
+        return $hash;
     }
 
     public function totalMetres()

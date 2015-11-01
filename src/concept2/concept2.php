@@ -107,35 +107,19 @@ class concept2 {
          
     }
 
-    public function timeByMonth()
+    public function summaryByMonth()
     {
-        return $this->timeByDateSplit('M Y');
+        return $this->summaryByDateSplit('M Y');
     }
 
-    public function metresByMonth()
+    public function summaryByHourOfDay()
     {
-        $metresByMonth = $this->metresByDateSplit('M Y');
-
-        /*
-        foreach ($metresByMonth as $key=>&$month) {
-
-            print_r($month);exit;
-
-            $date = \DateTime::createFromFormat('M Y', $key);
-            $month['month'] = $date->format('m');
-            $month['year'] = $date->format('y');
-        */
-        return $metresByMonth;
+        return $this->summaryByDateSplit('H');
     }
 
-    public function metresByHourOfDay()
+    public function summaryByDayOfMonth()
     {
-        return $this->metresByDateSplit('H');
-    }
-
-    public function metresByDayOfMonth()
-    {
-        return $this->metresByDateSplit('d');
+        return $this->summaryByDateSplit('d');
     }
 
     private function secondsFromTime($time)
@@ -150,30 +134,17 @@ class concept2 {
         return $seconds;    
     }
 
-    private function metresByDateSplit($split)
+    private function summaryByDateSplit($split) 
     {
-        $metres = [];
+        $summary = [];
         foreach ($this->workouts as $workout) {
             $dateSplit = $workout->date->format($split);
-            if (!isset($metres[$dateSplit])) {
-                $metres[$dateSplit] = 0;
+            if (!isset($summary[$dateSplit])) {
+                $summary[$dateSplit] = ['distance' => 0, 'time' => 0];
             }
-            $metres[$dateSplit] += $workout->metres;
+            $summary[$dateSplit]['distance'] += $workout->metres;
+            $summary[$dateSplit]['time'] +=  $this->secondsFromTime($workout->time);
         }
-        return $metres;
-    }
-
-    private function timeByDateSplit($split)
-    {
-        $times = [];
-        foreach ($this->workouts as $workout) {
-            $dateSplit = $workout->date->format($split);
-            if (!isset($times[$dateSplit])) {
-                $times[$dateSplit] = 0;
-            }
-            $times[$dateSplit] += $this->secondsFromTime($workout->time);
-        }
-
-        return $times;
+        return $summary;
     }
 }

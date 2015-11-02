@@ -5,6 +5,7 @@ namespace cmhunt\concept2;
 class concept2 {
 
     private $file;
+    private $name;
     private $workouts = [];
 
     public function getWorkouts()
@@ -44,6 +45,10 @@ class concept2 {
 
         foreach ($data as $row) {
             $row = explode(',', $row);
+            if (count($row) == 2 && $row[0] == 'Log Data for:') {
+                $this->name = $row[1];
+            }
+            
             if (isset($row[5]) && isset($row[6]) && strlen($row[5] > 0 && strlen($row[6]) > 0)) {
                 $workoutDate = \DateTime::createFromFormat('d/m/Y H:i', $row[2] . " " . $row[3]);
                 if ($workoutDate) {
@@ -120,6 +125,19 @@ class concept2 {
     public function summaryByDayOfMonth()
     {
         return $this->summaryByDateSplit('d');
+    }
+
+    public function summaryByDayOfWeek()
+    {
+        $days = $this->summaryByDateSplit('N');
+        $dayMap = [1=>'Mon', 2=>'Tues', 3=>'Wed', 4=>'Thurs', 5=>'Fri', 6=>'Sat', 7=>'Sun'];
+        ksort($days);
+        $daysOut = [];
+        foreach ($days as $dayId=>$day)
+        {
+            $daysOut[$dayMap[$dayId]] = $day;
+        }
+        return $daysOut;
     }
 
     private function secondsFromTime($time)

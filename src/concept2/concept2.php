@@ -13,6 +13,11 @@ class concept2 {
         return $this->workouts;
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
     public function getWorkoutsByType($type)
     {
         $workouts = [];
@@ -42,9 +47,9 @@ class concept2 {
 
         // Split data into array
         $data = explode("\n", $data);
-
         foreach ($data as $row) {
             $row = explode(',', $row);
+
             if (count($row) == 2 && $row[0] == 'Log Data for:') {
                 $this->name = $row[1];
             }

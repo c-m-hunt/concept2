@@ -7,6 +7,12 @@ class concept2 {
     private $file;
     private $name;
     private $workouts = [];
+    private $allWorkouts = [];
+
+    public function switchUser($name)
+    {
+        $this->workouts = $this->allWorkouts[$name];
+    }
 
     public function getWorkouts()
     {
@@ -41,9 +47,11 @@ class concept2 {
         return $workouts;
     }
 
-    public function loadData($data)
+    public function loadData($data, $name = null)
     {
+        $workouts = [];
         $workout = null;
+        $this->name = trim($name);
 
         // Split data into array
         $data = explode("\n", $data);
@@ -51,15 +59,21 @@ class concept2 {
             $row = explode(',', $row);
 
             if (count($row) == 2 && $row[0] == 'Log Data for:') {
-                $this->name = $row[1];
+                if (!$this->name) {
+                    $this->name = trim($row[1]);
+                }
+            }            
+
+            if (isset($row[1])) {
+                $name = $row[1];
             }
-            
+
             if (isset($row[5]) && isset($row[6]) && strlen($row[5] > 0 && strlen($row[6]) > 0)) {
                 $workoutDate = \DateTime::createFromFormat('d/m/Y H:i', $row[2] . " " . $row[3]);
                 if ($workoutDate) {
                     if ($workout instanceof workout) {
 
-                        $this->workouts[$this->getWorkoutHash($workout)] = $workout;
+                        $workouts[$name][$this->getWorkoutHash($workout)] = $workout;
                     }
                     $workout = new workout($workoutDate, $row[4]);
                     $workout->time = $row[5];
@@ -79,7 +93,9 @@ class concept2 {
                 }                
             }
         }
-        $this->workouts[$this->getWorkoutHash($workout)] = $workout;
+        $workouts[$name][$this->getWorkoutHash($workout)] = $workout;
+        $this->allWorkouts = $workouts;
+        $this->workouts = $workouts[$this->name];
     }
 
     private function getWorkoutHash($workout)

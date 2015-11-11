@@ -68,7 +68,7 @@ class concept2 {
                 $name = $row[1];
             }
 
-            if (isset($row[5]) && isset($row[6]) && strlen($row[5] > 0 && strlen($row[6]) > 0)) {
+            if (isset($row[5]) && isset($row[6]) && strlen($row[5]) > 0 && strlen($row[6]) > 0) {
                 $workoutDate = \DateTime::createFromFormat('d/m/Y H:i', $row[2] . " " . $row[3]);
                 if ($workoutDate) {
                     if ($workout instanceof workout) {

@@ -47,6 +47,17 @@ class concept2 {
         return $workouts;
     }
 
+    public function getWorkoutsByName($name)
+    {
+        $workouts = [];
+        foreach ($this->workouts as $key=>$workout) {
+            if ($workout->workoutName == $name) {
+                $workouts[$key] = $workout;
+            }
+        }
+        return $workouts;
+    }
+
     public function loadData($data, $name = null)
     {
         $workouts = [];

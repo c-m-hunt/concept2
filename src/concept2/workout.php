@@ -9,7 +9,10 @@ class workout
     const INTERVAL = 'interval';
     const DISTANCE = 'distance';
 
-
+    public $workoutId;
+    public $username;
+    public $name;
+    
     public $date;
     public $workoutName;
     public $type;

@@ -63,7 +63,7 @@ class concept2 {
         $workouts = [];
         $workout = null;
         $this->name = trim($name);
-
+        
         // Split data into array
         $data = explode("\n", $data);
         foreach ($data as $row) {
@@ -73,7 +73,7 @@ class concept2 {
                 if (!$this->name) {
                     $this->name = trim($row[1]);
                 }
-            }            
+            }
 
             if (isset($row[1])) {
                 $name = $row[1];
@@ -83,10 +83,11 @@ class concept2 {
                 $workoutDate = \DateTime::createFromFormat('d/m/Y H:i', $row[2] . " " . $row[3]);
                 if ($workoutDate) {
                     if ($workout instanceof workout) {
-
-                        $workouts[$name][$this->getWorkoutHash($workout)] = $workout;
+                        $workouts[$this->name][$this->getWorkoutHash($workout)] = $workout;
                     }
                     $workout = new workout($workoutDate, $row[4]);
+                    $workout->username = $this->name;
+                    $workout->name = $row[1];
                     $workout->time = $row[5];
                     $workout->metres = $row[6];
                     $workout->averageSPM = $row[7];
@@ -94,6 +95,7 @@ class concept2 {
                     $workout->averagePace = $row[13];
                     $workout->calPerHour = $row[14];
                     $workout->averageWatt = $row[15];
+                    $workout->workoutId = $this->getWorkoutHash($workout);
                 }
             }
 
@@ -104,7 +106,10 @@ class concept2 {
                 }                
             }
         }
-        $workouts[$name][$this->getWorkoutHash($workout)] = $workout;
+
+        if (!is_null($workout) > 0) {
+            $workouts[$name][$this->getWorkoutHash($workout)] = $workout;
+        }        
         $this->allWorkouts = $workouts;
         $this->workouts = $workouts[$this->name];
     }

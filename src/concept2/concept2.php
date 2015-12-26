@@ -108,7 +108,7 @@ class concept2 {
         }
 
         if (!is_null($workout) > 0) {
-            $workouts[$name][$this->getWorkoutHash($workout)] = $workout;
+            $workouts[$this->name][$this->getWorkoutHash($workout)] = $workout;
         }        
         $this->allWorkouts = $workouts;
         $this->workouts = $workouts[$this->name];

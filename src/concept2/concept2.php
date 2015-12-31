@@ -89,12 +89,12 @@ class concept2 {
                     $workout->username = $this->name;
                     $workout->name = $row[1];
                     $workout->time = $row[5];
-                    $workout->metres = $row[6];
-                    $workout->averageSPM = $row[7];
-                    $workout->averageHeartRate = $row[8];
+                    $workout->metres = (int) $row[6];
+                    $workout->averageSPM = (int) $row[7];
+                    $workout->averageHeartRate = (int) $row[8];
                     $workout->averagePace = $row[13];
-                    $workout->calPerHour = $row[14];
-                    $workout->averageWatt = $row[15];
+                    $workout->calPerHour = (int) $row[14];
+                    $workout->averageWatt = (int) $row[15];
                     $workout->workoutId = $this->getWorkoutHash($workout);
                 }
             }

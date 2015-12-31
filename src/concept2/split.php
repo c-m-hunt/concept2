@@ -13,9 +13,9 @@ class split
     public function __construct($time, $metres, $averageSR, $averageHeartRate, $averagePace)
     {
         $this->time = $time;
-        $this->metres = $metres;
-        $this->averageSR = $averageSR;
-        $this->averageHeartRate = $averageHeartRate;
+        $this->metres = (int) $metres;
+        $this->averageSR = (int) $averageSR;
+        $this->averageHeartRate = (int) $averageHeartRate;
         $this->averagePace = $averagePace;;
     }
 

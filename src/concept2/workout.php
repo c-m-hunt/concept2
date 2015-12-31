@@ -46,6 +46,7 @@ class workout
     {
         $this->splits[] = $split;
     }
+
 }
 
 

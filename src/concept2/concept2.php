@@ -88,11 +88,11 @@ class concept2 {
                     $workout = new workout($workoutDate, $row[4]);
                     $workout->username = $this->name;
                     $workout->name = $row[1];
-                    $workout->time = $row[5];
+                    $workout->time = $this->secondsFromTime($row[5]);
                     $workout->metres = (int) $row[6];
                     $workout->averageSPM = (int) $row[7];
                     $workout->averageHeartRate = (int) $row[8];
-                    $workout->averagePace = $row[13];
+                    $workout->averagePace = $this->secondsFromTime($row[13]);
                     $workout->calPerHour = (int) $row[14];
                     $workout->averageWatt = (int) $row[15];
                     $workout->workoutId = $this->getWorkoutHash($workout);
@@ -101,9 +101,9 @@ class concept2 {
 
             if (isset($row[9]) && isset($row[10]) && strlen($row[9]) > 0 && strlen($row[10]) > 0 && is_numeric($row[10])) {
                 if ($workout instanceof workout) {
-                    $split = new split($row[9], $row[10], $row[11], $row[12], $row[13]);
+                    $split = new split($this->secondsFromTime($row[9]), $row[10], $row[11], $row[12], $this->secondsFromTime($row[13]));
                     $workout->addSplit(($split));
-                }                
+                }
             }
         }
 
@@ -133,7 +133,7 @@ class concept2 {
     {
         $seconds = 0;
         foreach ($this->workouts as $workout) {
-            $seconds = $seconds + $this->secondsFromTime($workout->time);
+            $seconds = $seconds + $workout->time;
         }
         return $seconds;
     }
@@ -145,8 +145,7 @@ class concept2 {
             return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);  
         } else {
             return sprintf('%02d:%02d', ($t/60%60), $t%60);  
-        }
-         
+        }         
     }
 
     public function summaryByMonth()
@@ -198,7 +197,7 @@ class concept2 {
                 $summary[$dateSplit] = ['distance' => 0, 'time' => 0];
             }
             $summary[$dateSplit]['distance'] += $workout->metres;
-            $summary[$dateSplit]['time'] +=  $this->secondsFromTime($workout->time);
+            $summary[$dateSplit]['time'] +=  $workout->time;
         }
         return $summary;
     }

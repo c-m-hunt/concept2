@@ -139,12 +139,13 @@ class concept2 {
     }
 
     public function formatSecondsToTime($seconds, $inclHours = true)
-    {
-        $t = round($seconds);
+    {    	    	
+        $t = $seconds; // round($seconds);
+        if ($t > 3600) { $inclHours = true; }
         if ($inclHours) {
-            return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);  
+            return sprintf('%02d:%02d:%02d.%01d', ($t/3600),($t/60%60), $t%60, fmod($t,1) * 10);  
         } else {
-            return sprintf('%02d:%02d', ($t/60%60), $t%60);  
+            return sprintf('%02d:%02d.%01d', ($t/60%60), $t%60, fmod($t,1) * 10);  
         }         
     }
 
@@ -184,7 +185,8 @@ class concept2 {
             $seconds = $seconds + ($time[0] * 60)  + $time[1];
         } else {
             $seconds = $seconds + ($time[0] * 60 * 60)+ ($time[1] * 60) + $time[2];   
-        } 
+        }        
+        
         return $seconds;    
     }
 

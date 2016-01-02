@@ -138,15 +138,19 @@ class concept2 {
         return $seconds;
     }
 
-    public function formatSecondsToTime($seconds, $inclHours = true)
+    public function formatSecondsToTime($seconds, $inclHours = true, $inclDec = true)
     {    	    	
         $t = $seconds; // round($seconds);
         if ($t > 3600) { $inclHours = true; }
         if ($inclHours) {
-            return sprintf('%02d:%02d:%02d.%01d', ($t/3600),($t/60%60), $t%60, fmod($t,1) * 10);  
+            $formatted = sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);  
         } else {
-            return sprintf('%02d:%02d.%01d', ($t/60%60), $t%60, fmod($t,1) * 10);  
-        }         
+            $formatted = sprintf('%02d:%02d', ($t/60%60), $t%60);  
+        }     
+        if ($inclDec) {
+        	$formatted = sprintf('%s.%01d', $formatted, fmod($t,1) * 10);
+        }
+        return $formatted;
     }
 
     public function summaryByMonth()

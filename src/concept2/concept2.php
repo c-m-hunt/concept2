@@ -157,6 +157,11 @@ class concept2 {
     {
         return $this->summaryByDateSplit('M Y');
     }
+    
+    public function summaryByDay()
+    {
+        return $this->summaryByDateSplit('j/n/Y');
+    }
 
     public function summaryByHourOfDay()
     {

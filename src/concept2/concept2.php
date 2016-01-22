@@ -160,8 +160,8 @@ class concept2 {
     
     public function summaryByDay()
     {
-        return $this->summaryByDateSplit('j/n/Y');
-    }
+    	return $this->summaryByDateSplit('Y-m-d');
+    }    
 
     public function summaryByHourOfDay()
     {
